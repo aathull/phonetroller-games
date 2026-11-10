@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { generateRoomCode } from "@/lib/roomCode";
 
@@ -18,6 +18,19 @@ export default function HostPage() {
 
   const joinPageUrl = origin && `${origin}/joinparty`;
   const roomUrl = origin && roomCode && `${joinPageUrl}/${roomCode}`;
+  useEffect(() => {
+  if (!roomCode) return; // wait until the code exists
+  const ws = new WebSocket("ws://localhost:4000");
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === "increment" && data.code === roomCode) {
+      setCount((c) => c + 1);
+    }
+  };
+
+  return () => ws.close(); // close the socket when leaving the page
+}, [roomCode]);
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-6 font-sans">

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { isValidRoomCode } from "@/lib/roomCode";
+import PlusOneButton from "./PlusOneButton";
 
 // With cacheComponents enabled, route params are runtime data and must be read inside <Suspense>.
 export default function PartyPage({ params }: PageProps<"/joinparty/[code]">) {
@@ -9,7 +10,7 @@ export default function PartyPage({ params }: PageProps<"/joinparty/[code]">) {
       <Suspense fallback={<p className="text-zinc-500">Joining…</p>}>
         {params.then(({ code }) => (
           <PartyInfo code={code} />
-        ))}
+        ))} 
       </Suspense>
     </main>
   );
@@ -23,7 +24,8 @@ function PartyInfo({ code }: { code: string }) {
     <>
       <p className="text-sm uppercase tracking-widest text-zinc-500">Party</p>
       <p className="font-mono text-5xl font-bold tracking-[0.3em]">{upper}</p>
-      <p className="text-zinc-500">Joined! (Not connected to the host yet.)</p>
+      <p className="text-zinc-500">Joined!</p>
+      <PlusOneButton code={upper} />
     </>
   );
 }
