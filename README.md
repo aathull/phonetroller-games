@@ -1,8 +1,8 @@
-# Phonetroller-games
+# Phonetroller
 
 > 🚧 **Project in progress.**
 
-Play classic 1v1 games against your friends by using your phones as controllers!!
+Play classic 1v1 games against your friends by using your phones as controllers!
 
 ## How it works
 
